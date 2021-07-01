@@ -1,26 +1,31 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
-import countries from '../countries.json';
+import React, { useState, useEffect } from 'react';
 
 function CountriesList(props) {
-  let [countryList, setList] = useState(countries);
-
   function displayAll() {
-    return countryList.map((country) => {
+    return props.countries.map((eachCountry) => {
       return (
-        <li>
-          <Link to={`/country/${country.name.official}`}>
-            {country.name.official}
-          </Link>
-        </li>
+        <Link
+          className="list-group-item list-group-item-action"
+          to={`/country/${eachCountry.cca3}`}
+        >
+          {' '}
+          {eachCountry.name.common}
+        </Link>
       );
     });
   }
 
   return (
-    <div>
-      <ul>{displayAll()}</ul>
+    <div className="container">
+      <div className="row">
+        <div
+          className="col-5"
+          style={{ maxHeight: '90vh', overflow: 'scroll' }}
+        >
+          <div className="list-group">{displayAll()}</div>
+        </div>
+      </div>
     </div>
   );
 }
